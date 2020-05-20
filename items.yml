@@ -54,54 +54,54 @@ metrics-server-amd64:
 #########
 flannel:
   source: quay.io/coreos/
-  target: registry.cn-shenzhen.aliyuncs.com/quayio_aliyun/
+  target: ccr.ccs.tencentyun.com/tsf_100000491309/
   tag:
     limit: 9999
 
 nginx-ingress-controller:
   source: quay.io/kubernetes-ingress-controller/
-  target: registry.cn-shenzhen.aliyuncs.com/quayio_aliyun/
+  target: ccr.ccs.tencentyun.com/tsf_100000491309/
   tag:
     limit: 9999
 ########
 dashboard:
   source: docker.io/kubernetesui/
-  target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
+  target: ccr.ccs.tencentyun.com/tsf_100000491309/
   tag:
     limit: 9999
 
 nexus3:
   source: docker.io/sonatype/
-  target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
+  target: ccr.ccs.tencentyun.com/tsf_100000491309/
   tag:
     limit: 9999
 
 sonarqube:
   source: docker.io/library/
-  target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
+  target: ccr.ccs.tencentyun.com/tsf_100000491309/
   tag:
     limit: 9999
 
 traefik:
   source: docker.io/library/
-  target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
+  target: ccr.ccs.tencentyun.com/tsf_100000491309/
   tag:
     limit: 9999
 
 jenkins:
   source: docker.io/jenkins/
-  target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
+  target: ccr.ccs.tencentyun.com/tsf_100000491309/
   tag:
     limit: 9999
 
 gitlab-ce:
   source: docker.io/gitlab/
-  target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
+  target: ccr.ccs.tencentyun.com/tsf_100000491309/
   tag:
     limit: 9999
 
 gitlab-runner:
   source: docker.io/gitlab/
-  target: registry.cn-shenzhen.aliyuncs.com/dockerio_aliyun/
+  target: ccr.ccs.tencentyun.com/tsf_100000491309/
   tag:
     limit: 9999
