@@ -1,5 +1,41 @@
+dashboard:
+  source: docker.io/kubernetesui/
+  target: ccr.ccs.tencentyun.com/tsf_100000491309/
+  tag:
+    limit: 20
+
+nexus3:
+  source: docker.io/sonatype/
+  target: ccr.ccs.tencentyun.com/tsf_100000491309/
+  tag:
+    limit: 20
+
+sonarqube:
+  source: docker.io/library/
+  target: ccr.ccs.tencentyun.com/tsf_100000491309/
+  tag:
+    limit: 20
+
 traefik:
   source: docker.io/library/
   target: ccr.ccs.tencentyun.com/tsf_100000491309/
   tag:
-    limit: 50
+    limit: 20
+
+jenkins:
+  source: docker.io/jenkins/
+  target: ccr.ccs.tencentyun.com/tsf_100000491309/
+  tag:
+    limit: 20
+
+gitlab-ce:
+  source: docker.io/gitlab/
+  target: ccr.ccs.tencentyun.com/tsf_100000491309/
+  tag:
+    limit: 20
+
+gitlab-runner:
+  source: docker.io/gitlab/
+  target: ccr.ccs.tencentyun.com/tsf_100000491309/
+  tag:
+    limit: 20
