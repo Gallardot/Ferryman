@@ -2,4 +2,4 @@ traefik:
   source: docker.io/library/
   target: ccr.ccs.tencentyun.com/tsf_100000491309/
   tag:
-    limit: 9999
+    limit: 50
