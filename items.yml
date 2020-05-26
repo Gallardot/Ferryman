@@ -1,3 +1,16 @@
+#########
+flannel:
+  source: quay.io/coreos/
+  target: ccr.ccs.tencentyun.com/tsf_100000491309/
+  tag:
+    limit: 20
+
+nginx-ingress-controller:
+  source: quay.io/kubernetes-ingress-controller/
+  target: ccr.ccs.tencentyun.com/tsf_100000491309/
+  tag:
+    limit: 20
+########
 dashboard:
   source: docker.io/kubernetesui/
   target: ccr.ccs.tencentyun.com/tsf_100000491309/
