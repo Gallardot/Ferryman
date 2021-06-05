@@ -23,6 +23,7 @@ if os.environ.get('TARGET_USER') and os.environ.get('TARGET_PASSWORD'):
     target_user = os.environ.get('TARGET_USER')
     target_password = os.environ.get('TARGET_PASSWORD')
     target_auth = { 'username': target_user, 'password': target_password }
+    print(target_auth)
 else:
     target_auth = {'username': 'Your username', 'password': 'Your password'}
 
