@@ -230,7 +230,6 @@ def sync_images(image, src_repo, target_repo, tag_list):
             #pydocker.remove_image(source)
 
             logging.info (f"Push Image: {image}, Tag: {tag}")
-            logging.info (target_auth)
             retry_call(docker_push, fargs=[target, target_auth] , exceptions=Exception, tries=6, delay=10)
             pydocker.remove_image(target)
 
