@@ -12,36 +12,49 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-
-    - name: Creating kind cluster 
-      uses: helm/kind-action@v1.0.0-rc.1
-
-    - name: Print cluster information
-      run: |
-        kubectl config view
-        kubectl cluster-info
-        kubectl get nodes
-        kubectl get pods -n kube-system
-        helm version
-        kubectl version
     - uses: actions/checkout@v2
+      
+    - name: init
+      run: |
+        echo "Current path: $(pwd)"
+        echo "List files: $(ls -l)"
+        
+        # time zone
+        /bin/cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+        echo "current time: $(date +%Y-%m-%d\ %H:%M:%S)"
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.7'
 
-    - name: Deploy an application
+    - name: Install dependencies
       run: |
-        kubectl apply -f https://raw.githubusercontent.com/chaos-mesh/apps/master/ping/busybox-statefulset.yaml
+        python -V
+        python -m pip install --upgrade pip
         
-    - name: Check pods
-      run: |
-        kubectl get pods -n chaos-testing
-        sleep 5
-        kubectl get pods -n busybox
+        #pip install flake8 pytest
         
-    - name: Run chaos mesh action
-      uses: chaos-mesh/chaos-mesh-action@master
+        if [ -f requirements.txt ]; then
+          pip install -r requirements.txt
+        fi
+    - name: Run APP
+      # 指定超时分钟数（Default: 360）
+      # 每个Job最大时长是默认的360分钟，超过后会被触发取消操作，而不是超时操作，所以最好设置一个超时时间触发超时
+      timeout-minutes: 300
+      # 即使步骤出错也继续运行
+      #continue-on-error: true
       env:
-        CFG_BASE64: YXBpVmVyc2lvbjogY2hhb3MtbWVzaC5vcmcvdjFhbHBoYTEKa2luZDogTmV0d29ya0NoYW9zCm1ldGFkYXRhOgogIG5hbWU6IG5ldHdvcmstZGVsYXkKICBuYW1lc3BhY2U6IGJ1c3lib3gKc3BlYzoKICBhY3Rpb246IGRlbGF5ICMgdGhlIHNwZWNpZmljIGNoYW9zIGFjdGlvbiB0byBpbmplY3QKICBtb2RlOiBhbGwKICBzZWxlY3RvcjoKICAgIHBvZHM6CiAgICAgIGJ1c3lib3g6CiAgICAgICAgLSBidXN5Ym94LTAKICBkZWxheToKICAgIGxhdGVuY3k6ICIxMG1zIgogIGR1cmF0aW9uOiAiNXMiCiAgc2NoZWR1bGVyOgogICAgY3JvbjogIkBldmVyeSAxMHMiCiAgZGlyZWN0aW9uOiB0bwogIHRhcmdldDoKICAgIHNlbGVjdG9yOgogICAgICBwb2RzOgogICAgICAgIGJ1c3lib3g6CiAgICAgICAgICAtIGJ1c3lib3gtMQogICAgbW9kZTogYWxsCg==
-
-    - name: Verify
+        TARGET_USER: ${{ secrets.TARGET_USER }}
+        TARGET_PASSWORD: ${{ secrets.TARGET_PASSWORD }}
       run: |
-        echo "do some verify"
-        kubectl exec busybox-0 -it -n busybox -- ping -c 30 busybox-1.busybox.busybox.svc
+        python ferryman.py
+    - name: Git Commit & Push
+      env:
+        GIT_MAIL: ${{ secrets.GIT_MAIL }}
+        GIT_USER: ${{ secrets.GIT_USER }}
+      run: |
+        git config --global user.email $GIT_MAIL
+        git config --global user.name $GIT_USER
+        git add .
+        git commit -m "Updated at $(date +%Y-%m-%d\ %H:%M:%S)" -a || echo "nothing to commit"
+        git push
