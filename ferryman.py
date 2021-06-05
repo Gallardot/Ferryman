@@ -23,7 +23,6 @@ if os.environ.get('TARGET_USER') and os.environ.get('TARGET_PASSWORD'):
     target_user = os.environ.get('TARGET_USER')
     target_password = os.environ.get('TARGET_PASSWORD')
     target_auth = { 'username': target_user, 'password': target_password }
-    print(target_auth)
 else:
     target_auth = {'username': 'Your username', 'password': 'Your password'}
 
@@ -231,6 +230,7 @@ def sync_images(image, src_repo, target_repo, tag_list):
             #pydocker.remove_image(source)
 
             logging.info (f"Push Image: {image}, Tag: {tag}")
+            logging.info (target_auth)
             retry_call(docker_push, fargs=[target, target_auth] , exceptions=Exception, tries=6, delay=10)
             pydocker.remove_image(target)
 
